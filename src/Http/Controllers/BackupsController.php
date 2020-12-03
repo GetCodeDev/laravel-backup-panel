@@ -57,8 +57,10 @@ class BackupsController extends Controller
     public function create(Request $request)
     {
         $option = $request->input('option', '');
+        $db_name = $request->input('db_name', '');
+        $sanitized = $request->input('sanitized', '');
 
-        dispatch(new CreateBackupJob($option))
+        dispatch(new CreateBackupJob($option, $db_name, $sanitized))
             ->onQueue(config('laravel_backup_panel.queue'));
     }
 }
